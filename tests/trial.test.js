@@ -4,16 +4,18 @@ describe('first pptr trial', () => {
   it('should launch browser', async () => {
     const browser = await puppeteer.launch({
       headless: false,
-      slowMo: 500,
       devtools: false,
+      slowMo: 300,
     });
     const page = await browser.newPage();
-    await page.goto('https://www.hiddenlevers.com');
-    await page.waitForTimeout(3000);
+    await page.goto('https://example.com');
     await page.waitForSelector('h1');
-    await page.waitForTimeout(3000);
-    await page.reload();
-    await page.waitForSelector('h2');
+    await page.goto('https://www.linkedin.com');
+    await page.waitForSelector('h1');
+    await page.goBack();
+    await page.waitForSelector('h1');
+    await page.goForward();
+    await page.waitForSelector('h1');
     await browser.close();
   });
 });
