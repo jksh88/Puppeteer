@@ -5,17 +5,14 @@ describe('first pptr trial', () => {
     const browser = await puppeteer.launch({
       headless: false,
       devtools: false,
-      slowMo: 300,
+      slowMo: 30,
     });
     const page = await browser.newPage();
-    await page.goto('https://example.com');
-    await page.waitForSelector('h1');
-    await page.goto('https://www.linkedin.com');
-    await page.waitForSelector('h1');
-    await page.goBack();
-    await page.waitForSelector('h1');
-    await page.goForward();
-    await page.waitForSelector('h1');
+    await page.goto('https://devexpress.github.io/testcafe/example');
+    await page.type('#developer-name', 'Mike', { delay: 2 });
+    await page.click('#tried-test-cafe', { clickCount: 1 });
+    await page.select('#preferred-interface', 'Command Line');
+    await page.waitForTimeout(12000);
     await browser.close();
   });
 });
