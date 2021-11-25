@@ -1,23 +1,29 @@
 const puppeteer = require('puppeteer');
+const expect = require('chai').expect;
 
 describe('first pptr trial', () => {
   it('should launch browser', async () => {
     const browser = await puppeteer.launch({
-      headless: false,
+      headless: true,
       devtools: false,
       slowMo: 30,
     });
     const page = await browser.newPage();
+    await page.setDefaultTimeout(10000);
+    await page.setDefaultTimeout(20000);
     await page.goto('https://devexpress.github.io/testcafe/example');
-    await page.type('#developer-name', 'Mike', { delay: 2 });
-    await page.click('#tried-test-cafe', { clickCount: 1 });
-    await page.select('#preferred-interface', 'Command Line');
-    const msg = 'Testing my input message';
-    await page.type('#comments', msg);
-    await page.click('#submit-button');
-    await page.waitForSelector('#article-header');
-    await page.waitForTimeout(12000);
-
+    const title = await page.title();
+    const url = await page.url();
+    console.log('TITLE: ', title);
+    expect(title).to.be.a('string', 'TestCafe Example Page');
+    console.log('URL: ' + url);
+    expect(url).to.include('example');
+    const countP = await page.$$eval('p', (pNodeList) => pNodeList.length);
+    console.log('P count: ' + countP);
+    expect(countP).to.equal(9);
+    const text = await page.$eval('h1', (el) => el.innerText);
+    console.log('TEXT: ' + text);
+    expect(text).to.be.a('string', 'Example');
     await browser.close();
   });
 });
