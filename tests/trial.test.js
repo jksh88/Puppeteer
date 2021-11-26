@@ -4,7 +4,7 @@ const expect = require('chai').expect;
 describe('first pptr trial', () => {
   it('should launch browser', async () => {
     const browser = await puppeteer.launch({
-      headless: true,
+      headless: false,
       devtools: false,
       slowMo: 30,
     });
@@ -24,6 +24,12 @@ describe('first pptr trial', () => {
     const text = await page.$eval('h1', (el) => el.innerText);
     console.log('TEXT: ' + text);
     expect(text).to.be.a('string', 'Example');
+
+    await page.goto('http://zero.webappsecurity.com/index.html');
+    await page.waitForSelector('#searchTerm');
+    await page.type('#searchTerm', 'Trying tying by jay');
+    await page.keyboard.press('Enter', { delay: 20 });
+    await page.waitForTimeout(5000);
     await browser.close();
   });
 });
