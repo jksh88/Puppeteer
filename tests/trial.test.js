@@ -26,10 +26,13 @@ describe('first pptr trial', () => {
     expect(text).to.be.a('string', 'Example');
 
     await page.goto('http://zero.webappsecurity.com/index.html');
-    await page.waitForSelector('#searchTerm');
-    await page.type('#searchTerm', 'Trying tying by jay');
-    await page.keyboard.press('Enter', { delay: 20 });
-    await page.waitForTimeout(5000);
+    await page.waitForSelector('#signin_button');
+    await page.click('#signin_button');
+    await page.waitForTimeout(() => !document.querySelector('#signin_button'));
+    await page.waitForSelector('#signin_button', {
+      hidden: true,
+      timeout: 10000,
+    });
     await browser.close();
   });
 });
