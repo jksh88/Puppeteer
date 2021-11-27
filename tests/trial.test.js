@@ -2,15 +2,22 @@ const puppeteer = require('puppeteer');
 const expect = require('chai').expect;
 
 describe('first pptr trial', () => {
-  it('should launch browser', async () => {
-    const browser = await puppeteer.launch({
+  let browser;
+  let page;
+  beforeEach(async () => {
+    browser = await puppeteer.launch({
       headless: false,
       devtools: false,
       slowMo: 30,
     });
-    const page = await browser.newPage();
-    await page.setDefaultTimeout(10000);
-    await page.setDefaultTimeout(20000);
+    page = await browser.newPage();
+    page.setDefaultTimeout(10000);
+    page.setDefaultTimeout(20000);
+  });
+
+  afterEach(async () => await browser.close());
+
+  it('should launch browser', async () => {
     await page.goto('https://devexpress.github.io/testcafe/example');
     const title = await page.title();
     const url = await page.url();
@@ -33,6 +40,5 @@ describe('first pptr trial', () => {
       hidden: true,
       timeout: 10000,
     });
-    await browser.close();
   });
 });
