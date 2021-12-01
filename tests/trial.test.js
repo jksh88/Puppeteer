@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const expect = require('chai').expect;
 
-const { click, getCount, getText } = require('../lib/utils.js');
+const { click, getCount, getText, shouldNotExist } = require('../lib/utils.js');
 
 describe('first pptr trial', () => {
   let browser;
@@ -26,5 +26,7 @@ describe('first pptr trial', () => {
     console.log('TEXT: ', text);
     const countP = await getCount(page, 'p');
     console.log('P count: ' + countP);
+    await page.waitForTimeout(2000);
+    await shouldNotExist(page, 'random_button');
   });
 });
