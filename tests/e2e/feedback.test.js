@@ -30,13 +30,10 @@ describe('Feedback test', () => {
     await page.click('input[name="submit"]');
   });
 
-  it('Provides thank you note', async () => {
-    await page.waitForSelector('.page-header');
-    const text = await page.$eval(
-      'div[class="offset3 span6"]',
-      (e) => e.textContent
-    );
-    console.log(text);
-    expect(text).to.contain('Thank you');
+  it('Leads to sendFeedback.html url', async () => {
+    await page.waitForSelector('#feedback-title');
+    const url = page.url();
+    console.log(url);
+    expect(url).to.contain('sendFeedback.html');
   });
 });
