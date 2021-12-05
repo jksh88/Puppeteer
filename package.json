@@ -6,7 +6,8 @@
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --timeout=30000 ./tests/trial.test.js",
     "testDevice": "./node_modules/mocha/bin/mocha --timeout=30000 ./tests/device.test.js",
-    "testLogin": "./node_modules/mocha/bin/mocha --timeout=30000 ./tests/e2e/login.test.js"
+    "testLogin": "./node_modules/mocha/bin/mocha --timeout=30000 ./tests/e2e/login.test.js",
+    "testFeedback": "./node_modules/mocha/bin/mocha --timeout=30000 ./tests/e2e/feedback.test.js"
   },
   "keywords": [],
   "author": "",
