@@ -8,7 +8,7 @@ describe('Feedback test', () => {
   before(async () => {
     browser = await puppeteer.launch({
       headless: false,
-      slowMo: 40,
+      slowMo: 20,
       devtools: false,
     });
     page = await browser.newPage();
@@ -32,7 +32,11 @@ describe('Feedback test', () => {
 
   it('Provides thank you note', async () => {
     await page.waitForSelector('.page-header');
-    const text = await page.$eval('.page-header::after', (e) => e.textContent);
+    const text = await page.$eval(
+      'div[class="offset3 span6"]',
+      (e) => e.textContent
+    );
+    console.log(text);
     expect(text).to.contain('Thank you');
   });
 });
