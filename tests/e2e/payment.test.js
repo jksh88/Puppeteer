@@ -9,7 +9,7 @@ describe('Payment test', () => {
     browser = await puppeteer.launch({
       headless: false,
       devtools: false,
-      slowMo: 2,
+      slowMo: 20,
       ignoreHTTPSErrors: true,
     });
     page = await browser.newPage();
@@ -38,6 +38,20 @@ describe('Payment test', () => {
   });
 
   it('Makes payment', async () => {
-    //TODO
+    await page.waitForSelector('.form-horizontal');
+    await page.select('#sp_payee', 'bofa');
+    await page.select('#sp_account', 'Checking');
+    await page.type('#sp_amount', '60');
+    await page.type('#sp_date', '2021-12-12');
+    await page.keyboard.press('Enter');
+    await page.type('#sp_description', 'lawn cut');
+    await page.click('#pay_saved_payees');
+    await page.waitForSelector('#alert_container');
+    const alert = await page.$eval(
+      '#alert_content > span',
+      (e) => e.textContent
+    );
+    console.log('ALERT: ', alert);
+    expect(alert).to.contain('successfully submitted');
   });
 });
